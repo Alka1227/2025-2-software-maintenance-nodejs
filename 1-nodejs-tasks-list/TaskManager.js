@@ -1,7 +1,7 @@
 const fs = require('fs');
 const readline = require('readline');
 
-class TaskManager {
+class TaskManager { 
   constructor() {
     this.tasks = [];
     this.fileName = 'tasks.json';
@@ -24,9 +24,17 @@ class TaskManager {
     fs.writeFileSync(this.fileName, JSON.stringify(this.tasks));
   }
 
+  getTaskId(self){
+    if (this.tasks.lenght === 0 ){
+      return 1;
+    } else {
+      return self.max(tasks) + 1; 
+    }
+  }
+
   addTask(title, description) {
     const task = {
-      id: this.tasks.length + 1,
+      id: this.getTaskId(tasks),
       title: title,
       description: description,
       status: 'Pending',
