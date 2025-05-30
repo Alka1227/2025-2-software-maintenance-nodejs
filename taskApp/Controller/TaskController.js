@@ -12,28 +12,32 @@ async function run() {
             case '1':
                 const title = await view.prompt('Enter task title: ');
                 const description = await view.prompt('Enter task descripton: ');
-                taskManager.addTask(title, description);
+                await taskManager.addTask(title, description);
                 console.log(`Task '${title}' added successfully!`);
                 break;
             case '2':
-                view.printTasks(taskManager.listTasks());
+                const task = await taskManager.listTasks()
+                view.printTasks(task);
                 break;
             case '3':
                 const taskId = parseInt(await view.prompt('Enter task ID: '));
-                if (taskManager.markComplete(taskId)) {
-                    console.log(`Task with ID ${taskId} marked as completed!`);
+                const success = await taskManager.markComplete(taskId);
+                if (success) {
+                    console.log(`Task ${taskId} marked as completed.`);
                 } else {
-                    console.log(`Task with ID ${taskId} not found.`);
+                    console.log(`Task ${taskId} not found.`);
                 }
                 break;
-            case '4':
+            case '4': {
                 const deleteTaskId = parseInt(await view.prompt('Enter task ID you wish to delete: '));
-                if (taskManager.deleteTask(deleteTaskId)) {
-                    console.log(`Task with ID ${deleteTaskId} removed!`);
+                const deleted = await taskManager.deleteTask(deleteTaskId);
+                if (deleted) {
+                    console.log(`Task ${deleteTaskId} deleted successfully.`);
                 } else {
-                    console.log(`Task with ID ${deleteTaskId} not found.`);
+                    console.log(`Task ${deleteTaskId} not found.`);
                 }
                 break;
+            }
             case '5':
                 view.close();
                 return;

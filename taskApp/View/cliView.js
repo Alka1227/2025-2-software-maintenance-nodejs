@@ -37,9 +37,15 @@ function printTasks(tasks){
 
     //bucle para recorrer tasks
     for (const task of tasks) {
-        console.log(`${String(task.id).padEnd(5)} ${task.title.substring(0, 18).padEnd(20)} ${task.status.padEnd(10)} ${task.createdDate.padEnd(20)} ${task.description.substring(0, 28).padEnd(30)}`);
+            const id = String(task.id).padEnd(5);
+    const title = (task.title ?? '').substring(0, 18).padEnd(20);
+    const status = (task.status ?? '').padEnd(10);
+    const createdDate = new Date(task.createdDate).toLocaleString().padEnd(20);
+    const description = (task.description ?? '').substring(0, 28).padEnd(30);
+
+    console.log(`${id} ${title} ${status} ${createdDate} ${description}`);
     }
-     console.log('='.repeat(80) + '\n');
+    console.log('='.repeat(80) + '\n');
 }
 
 function close() { //Cierra la interfaz de readline
