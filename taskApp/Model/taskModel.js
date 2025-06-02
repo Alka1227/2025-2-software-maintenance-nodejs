@@ -6,12 +6,23 @@ class taskManager {
         this.tasks = Task;
     } 
     async addTask(title, description) {
-      const task = await Task.create({ title, description });
-      console.log(`Task ${title} created successfully`);
+      try {
+        const task = await Task.create({ title, description });
+        console.log(`Task ${title} created successfully`);
+      }
+      catch (error) {
+        console.error(`Error creating task ${title}:`, error);
+        throw error;
       };
+    }
 
     async listTasks() {
-      return await Task.findAll();
+      try {
+        return await Task.findAll();
+      } catch (error) {
+        console.error('Error listing tasks:', error);
+        throw error;
+      }
     }
 
     async markComplete(taskId) {
