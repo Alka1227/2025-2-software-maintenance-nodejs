@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,7 +21,17 @@
   "homepage": "https://github.com/jlbautistac/2025-2-software-maintenance-nodejs#readme",
   "dependencies": {
     "dotenv": "^16.5.0",
+    "express": "^5.1.0",
     "mysql2": "^3.14.1",
+    "pg": "^8.16.3",
+    "pg-hstore": "^2.3.4",
+    "pgloader": "^1.1.6",
     "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.6.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "vite": "^7.0.0"
   }
 }
