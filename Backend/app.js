@@ -1,24 +1,29 @@
-const { run } = require('./Controller/TaskController.js');
-const view = require('./View/cliView.js');
+const express = require('express');
+const cors = require('cors');
+const taskRoutes = require('./Controller/TaskController.js');
 const { sequelize, connectDB } = require('./db.js');
 
-const init = async () => {
-  // Conexión a la base de datos
-  await connectDB()
-  await sequelize.sync(); //Asegura que los modelos estén sincronizados con las tablas de la BD
+const app = express();
 
-  // Run the application
-  await run();
+app.use(cors({
+  origin: 'http://localhost:5173' // el puerto donde corre frontend
+}));
 
+app.use(express.json()); //middleware para parsear JSON
+
+app.use('/api', taskRoutes);
+
+const start = async () => {
+  try {
+    await connectDB();
+    await sequelize.sync();
+    app.listen(4000, () => {
+      console.log('Servidor escuchando en http://localhost:4000');
+    });
+  } catch (error) {
+    console.error('Error iniciando el servidor:', error);
+    process.exit(1);
+  }
 };
 
-  init().catch(error => {
-    console.error('An error occurred:', error);
-    view.close();
-});
-
-  process.on('SIGINT', async () => { //Signal interruption
-    await sequelize.close();
-    view.close();
-    process.exit(0); //Termina el proceso con código 0 (exitoso)
-  });
+start();
